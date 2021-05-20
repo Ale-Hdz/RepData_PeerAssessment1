@@ -7,7 +7,8 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r}
+
+```r
 wd <- "."
 setwd(wd)
 data_path <- file.path(wd, "data")
@@ -18,9 +19,17 @@ df$date <- as.Date(df$date, "%Y-%m-%d")
 str(df)
 ```
 
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+```
+
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 total_steps <- tapply(df$steps, df$date, sum, na.rm = TRUE)
 hist(total_steps, breaks = 10, col = "lightblue", xlab = "Total steps",
      main = "Histogram of total number of steps per day")
@@ -30,6 +39,8 @@ abline(v = median(total_steps), col = "blue", lwd = 3)
 legend("topright", pch = 15, col = c("blue", "red"), 
        legend = c("Median", "Mean"))
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 ## What is the average daily activity pattern?
 
