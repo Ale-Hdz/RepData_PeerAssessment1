@@ -21,7 +21,6 @@ str(df)
 ```
 
 ## What is mean total number of steps taken per day?
-
 ```{r}
 total_steps <- tapply(df$steps, df$date, sum, na.rm = TRUE)
 hist(total_steps, breaks = 10, col = "lightblue", xlab = "Total steps",
@@ -32,6 +31,14 @@ abline(v = median(total_steps), col = "blue", lwd = 3)
 legend("topright", pch = 15, col = c("blue", "red"), 
        legend = c("Median", "Mean"))
 ```
+Printing explicitly the values for the mean and median
+```{r}
+mean_ <- mean(total_steps)
+median_ <- median(total_steps)
+print(paste("The mean for the total number of steps per day is", mean_))
+print(paste("The median of the total number of steps per day is", median_))
+```
+
 
 ## What is the average daily activity pattern?
 ```{r}
@@ -48,6 +55,8 @@ points(x_max, y_max, pch = 19, col = "red")
 ```
 
 ## Imputing missing values
+For this step the strategy I chose is to replace all NAs values with the mean obtained for the interval were the steps are missing. This technique has the advantage that it can be used the averages calculated in the preovious block of code.
+
 ```{r}
 n_na <- sum(is.na(df$steps))
 print(paste("The number of missing values in 'steps' column is",
@@ -64,6 +73,10 @@ for(ind in indices)
 n_na2 <- sum(is.na(df2$steps))
 print(paste("The number of missing values in the new data frame is",
             n_na2))
+```
+The main difference is that the frequency of values for the mean total steps increases while it is reduced for intervals with lower frequencies. This is expected to happen by the technique I used.
+
+```{r}
 
 total_steps <- tapply(df$steps, df$date, sum, na.rm = TRUE)
 total_steps2 <- tapply(df2$steps, df2$date, sum, na.rm = TRUE)
@@ -82,7 +95,19 @@ abline(v = median(total_steps2), col = "blue", lwd = 2)
 legend("topright", pch = 15, col = c("blue", "red"), 
        legend = c("Median", "Mean"))
 ```
-
+Reporting mean and media explicitly.
+```{r}
+mean_1 <- mean(total_steps)
+median_1 <- median(total_steps)
+mean_2 <- mean(total_steps2)
+median_2 <- median(total_steps2)
+print("Data frame with NAs")
+print(paste("Mean:", mean_1))
+print(paste("Median:", median_1))
+print("Data frame without NAs")
+print(paste("Mean:", mean_2))
+print(paste("Median:", median_2))
+```
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r, fig.height=10}
 subset_days <- c("sábado", "domingo")

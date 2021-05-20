@@ -28,7 +28,6 @@ str(df)
 
 ## What is mean total number of steps taken per day?
 
-
 ```r
 total_steps <- tapply(df$steps, df$date, sum, na.rm = TRUE)
 hist(total_steps, breaks = 10, col = "lightblue", xlab = "Total steps",
@@ -41,6 +40,26 @@ legend("topright", pch = 15, col = c("blue", "red"),
 ```
 
 <img src="PA1_template_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+Printing explicitly the values for the mean and median
+
+```r
+mean_ <- mean(total_steps)
+median_ <- median(total_steps)
+print(paste("The mean for the total number of steps per day is", mean_))
+```
+
+```
+## [1] "The mean for the total number of steps per day is 9354.22950819672"
+```
+
+```r
+print(paste("The median of the total number of steps per day is", median_))
+```
+
+```
+## [1] "The median of the total number of steps per day is 10395"
+```
+
 
 ## What is the average daily activity pattern?
 
@@ -64,9 +83,11 @@ plot(intervals, mean_steps, type = "l", col = "blue", xlab = "Interval",
 points(x_max, y_max, pch = 19, col = "red")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ## Imputing missing values
+For this step the strategy I chose is to replace all NAs values with the mean obtained for the interval were the steps are missing. This technique has the advantage that it can be used the averages calculated in the preovious block of code.
+
 
 ```r
 n_na <- sum(is.na(df$steps))
@@ -94,6 +115,8 @@ print(paste("The number of missing values in the new data frame is",
 ```
 ## [1] "The number of missing values in the new data frame is 0"
 ```
+The main difference is that the frequency of values for the mean total steps increases while it is reduced for intervals with lower frequencies. This is expected to happen by the technique I used.
+
 
 ```r
 total_steps <- tapply(df$steps, df$date, sum, na.rm = TRUE)
@@ -114,8 +137,60 @@ legend("topright", pch = 15, col = c("blue", "red"),
        legend = c("Median", "Mean"))
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+Reporting mean and media explicitly.
 
+```r
+mean_1 <- mean(total_steps)
+median_1 <- median(total_steps)
+mean_2 <- mean(total_steps2)
+median_2 <- median(total_steps2)
+print("Data frame with NAs")
+```
+
+```
+## [1] "Data frame with NAs"
+```
+
+```r
+print(paste("Mean:", mean_1))
+```
+
+```
+## [1] "Mean: 9354.22950819672"
+```
+
+```r
+print(paste("Median:", median_1))
+```
+
+```
+## [1] "Median: 10395"
+```
+
+```r
+print("Data frame without NAs")
+```
+
+```
+## [1] "Data frame without NAs"
+```
+
+```r
+print(paste("Mean:", mean_2))
+```
+
+```
+## [1] "Mean: 10766.1886792453"
+```
+
+```r
+print(paste("Median:", median_2))
+```
+
+```
+## [1] "Median: 10766.1886792453"
+```
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```r
@@ -143,4 +218,4 @@ plot(intervals, mean_weekend, type = "l", col = "coral", ylim = rng,
      main = "Weeekends")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
